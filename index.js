@@ -6,7 +6,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-var users = [{id: 1, username: "ncnegoleo", password: '123'}, {id: 2, username: "mario", password: '456'}];
+var users = [];
 
 app.all('*', function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -49,7 +49,7 @@ app.post('/api/users', function (req, res) {
     users.push(postUser);
     res.json(true);
   } else {
-    res.json({success: false, message: `Username '${user.username}' is already taken`});
+    res.json({success: false, message: `Username '${postUser.username}' is already taken`});
   }
 });
 

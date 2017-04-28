@@ -12,7 +12,7 @@
       service.getAll = getAll;
       service.getById = getById;
       service.getByUsername = getByUsername;
-      // service.create = create;
+      service.create = create;
       // service.update = update;
       // service.delete = delete;
 
@@ -31,6 +31,11 @@
       function getByUsername(username) {
         return $http.get('/api/users/' + username)
           .then(_handleSuccess, _handleError('Error getting by username'));
+      }
+
+      function create(user) {
+        return $http.post('/api/users', user)
+          .then(_handleSuccess, _handleError('Error creating user'));
       }
 
       function _handleSuccess(res) {

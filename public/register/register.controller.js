@@ -5,9 +5,22 @@
     .module('app')
     .controller('RegisterController', RegisterController);
 
-  function RegisterController() {
+  RegisterController.$inject = ['UserService', '$location']
+  function RegisterController(UserService, $location) {
     var vm = this;
 
-    vm.message = "Register";
+    vm.register = register;
+
+    function register() {
+      UserService.create(vm.user)
+        .then(function(response) {
+          if(response) {
+            console.log("criou");
+            $location.path('/login');
+          } else {
+            console.log(response.message);
+          }
+        });
+    }
   }
 })();
