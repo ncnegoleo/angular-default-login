@@ -1,0 +1,28 @@
+{
+  "name": "default-login",
+  "version": "1.0.0",
+  "description": "\"Angular Login\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ncnegoleo/angular-default-login.git"
+  },
+  "keywords": [
+    "angular",
+    "login",
+    "registration"
+  ],
+  "author": "Leonardo soares <leonardo.soares.ws@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ncnegoleo/angular-default-login/issues"
+  },
+  "homepage": "https://github.com/ncnegoleo/angular-default-login#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2"
+  }
+}
