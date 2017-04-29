@@ -29,7 +29,7 @@ app.get('/api/users/:prm', function (req, res) {
       return;
     }
   });
-  res.status(404).end();
+  res.status(204).end();
 });
 
 app.post('/api/users', function (req, res) {
@@ -47,9 +47,9 @@ app.post('/api/users', function (req, res) {
     postUser.id = lastUser.id + 1;
 
     users.push(postUser);
-    res.json(true);
+    res.json({success: true});
   } else {
-    res.json({success: false, message: `Username '${postUser.username}' is already taken`});
+    res.json({success: false, message: `Username '${postUser.username}' is already taken!`});
   }
 });
 

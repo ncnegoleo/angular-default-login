@@ -5,17 +5,21 @@
     .module('app')
     .controller('LoginController', LoginController);
 
-  LoginController.$inject = ['AuthenticationService']
-  function LoginController(AuthenticationService) {
-
-    // AuthenticationService.login('mario', '456', function (response) {
-    //   if (response.success) {
-    //     console.log('logged');
-    //   } else {
-    //     console.log(response.message);
-    //   }
-    // });
-
+  LoginController.$inject = ['$location', 'AuthenticationService', 'FlashService']
+  function LoginController($location, AuthenticationService, FlashService) {
     var vm = this;
+
+    vm.login = login;
+
+    function login() {
+      AuthenticationService.login(vm.username, vm.password, function (response) {
+        if (response.success) {
+          AuthenticationService.setCredentials(vm.username, vm.password);
+          $location.path('/');
+        } else {
+          FlashService.error(response.message);
+        }
+      });
+    };
   }
 })();

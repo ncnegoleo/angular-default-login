@@ -5,20 +5,22 @@
     .module('app')
     .controller('RegisterController', RegisterController);
 
-  RegisterController.$inject = ['UserService', '$location']
-  function RegisterController(UserService, $location) {
+  RegisterController.$inject = ['UserService', '$location', 'Base64', 'FlashService']
+  function RegisterController(UserService, $location, Base64, FlashService) {
     var vm = this;
 
     vm.register = register;
 
     function register() {
-      UserService.create(vm.user)
+      var user = vm.user;
+      user.password = Base64.encode(user.password);
+      UserService.create(user)
         .then(function(response) {
-          if(response) {
-            console.log("criou");
+          if(response.success) {
+            FlashService.success('Registration successful!', true);
             $location.path('/login');
           } else {
-            console.log(response.message);
+            FlashService.error(response.message);
           }
         });
     }

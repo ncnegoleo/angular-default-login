@@ -13,6 +13,7 @@
   <div class="jumbotron">
     <div class="container">
         <div class="col-sm-8 col-sm-offset-2">
+            <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
             <div ng-view></div>
         </div>
     </div>
@@ -37,6 +38,9 @@
 
   <script src="./app-services/user.service.js"></script>
   <script src="./app-services/authentication.service.js"></script>
+  <script src="./app-services/falsh.service.js"></script>
+
+  <script src="./app-values/base64.value.js"></script>
 
   <script src="./home/home.controller.js"></script>
   <script src="./register/register.controller.js"></script>
