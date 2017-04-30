@@ -6,7 +6,15 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-var users = [];
+var users = [{
+    firstName: "leonardo",
+    lastName: "soares",
+    username: "ncnegoleo",
+    password: "123",
+    id: 1
+}];
+
+//var users = [];
 
 app.all('*', function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');

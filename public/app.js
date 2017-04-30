@@ -27,11 +27,29 @@
         controllerAs: 'vm'
       })
 
-      .otherwise({ redirectTo: '/'})
+      .otherwise({ redirectTo: '/login'})
   }
 
-  function run() {
+  run.$inject = ['$rootScope', '$location', '$cookies', '$http', 'AuthenticationService'];
+  function run($rootScope, $location, $cookies, $http, AuthenticationService) {
+    //AuthenticationService.clearCredentials();
+    // keep user logged in after page refresh
+    $rootScope.globals = $cookies.getObject('globals') || {};
+    if($rootScope.globals.currentUser) {
+      $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+    }
 
+    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+      // procura no array com a fun JQuery.inArray se o path não é /login ou /register
+      // se não for returna a fun -1, compara com -1 e returna true ou false
+      var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
+      var loggedIn = $rootScope.globals.currentUser;
+      if (restrictedPage && !loggedIn) {
+          $location.path('/login');
+      } else if (($location.path() == '/login' || $location.path() == '/register') && loggedIn) {
+        $location.path('/');
+      }
+    });
   }
 
 })();

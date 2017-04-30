@@ -21,7 +21,7 @@
       $timeout(function () {
         var response;
         UserService.getByUsername(username).then(function (user) {
-          if(user !== null && Base64.decode(user.password) == password) {
+          if(user !== null && user.password == password) {
             response = { success: true };
           } else {
             response = { success: false, message: 'Username or password is incorrect'};
@@ -32,11 +32,28 @@
     }
 
     function setCredentials(username, password) {
-      console.log("credentials are setted!");
+      var authdata = Base64.encode(username + ':' + password);
+
+      $rootScope.globals = {
+        currentUser: {
+          username: username,
+          authdata: authdata
+        }
+      };
+
+      // set default auth header for http requests
+      $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
+
+      // store user details in global cookie that keep user logged in for 1 week (or until they logout)
+      var cookieExp = new Date();
+      cookieExp.setDate(cookieExp.getDate() + 7);
+      $cookies.putObject('globals', $rootScope.globals, {expires: cookieExp});
     }
 
     function clearCredentials() {
-
+      $rootScope.globals = {};
+      $cookies.remove('globals');
+      $http.defaults.headers.common.Authorization = 'Basic';
     }
   }
 })();

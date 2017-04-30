@@ -13,7 +13,7 @@
 
     function register() {
       var user = vm.user;
-      user.password = Base64.encode(user.password);
+      user.password = user.password; //Base64.encode(user.password);
       UserService.create(user)
         .then(function(response) {
           if(response.success) {
