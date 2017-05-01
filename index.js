@@ -95,6 +95,23 @@ app.delete('/api/users/:id', function (req, res) {
   }
 });
 
+app.post('/api/authenticate', function(req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
+  var isCorrect = false;
+
+  users.forEach(function (user) {
+    if(user.username == username && user.password == password) {
+      isCorrect = true;
+    }
+  });
+  if(isCorrect) {
+    res.json({success: true, token: '!@r*!1aq!&#¨eq@q#*¨e#!)@83'});
+  } else {
+    res.json({success: false, message: 'Username or password is incorrect'})
+  }
+});
+
 // def port
 const PORT = process.env.port || 4000;
 

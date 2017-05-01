@@ -14,7 +14,7 @@
     function login() {
       AuthenticationService.login(vm.username, vm.password, function (response) {
         if (response.success) {
-          AuthenticationService.setCredentials(vm.username, vm.password);
+          AuthenticationService.setCredentials(vm.username, vm.password, response.token);
           $location.path('/');
         } else {
           FlashService.error(response.message);

@@ -11,6 +11,7 @@
 
     service.success = success;
     service.error = error;
+    service.warning = warning;
 
     initService();
 
@@ -45,6 +46,14 @@
       $rootScope.flash = {
         message: message,
         type: 'error',
+        keepAfterLocationChange: keepAfterLocationChange
+      }
+    };
+
+    function warning(message, keepAfterLocationChange) {
+      $rootScope.flash = {
+        message: message,
+        type: 'warning',
         keepAfterLocationChange: keepAfterLocationChange
       }
     };

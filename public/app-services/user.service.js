@@ -13,6 +13,7 @@
       service.getById = getById;
       service.getByUsername = getByUsername;
       service.create = create;
+      service.authenticate = authenticate;
       // service.update = update;
       // service.delete = delete;
 
@@ -35,6 +36,11 @@
 
       function create(user) {
         return $http.post('/api/users', user)
+          .then(_handleSuccess, _handleError('Error creating user'));
+      }
+
+      function authenticate(username, password) {
+        return $http.post('/api/authenticate', {username: username, password: password})
           .then(_handleSuccess, _handleError('Error creating user'));
       }
 

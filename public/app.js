@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('app', ['ngRoute', 'ngCookies'])
+    .module('app', ['ngRoute', 'ngCookies', 'ngIdle', 'ui.bootstrap'])
     .config(config)
     .run(run);
 
-  config.$inject = ['$routeProvider', '$locationProvider']
-  function config($routeProvider, $locationProvider) {
+  config.$inject = ['$routeProvider', '$locationProvider', 'IdleProvider', 'KeepaliveProvider']
+  function config($routeProvider, $locationProvider, IdleProvider, KeepaliveProvider) {
     $routeProvider
       .when('/', {
         controller: 'HomeController',
@@ -28,11 +28,17 @@
       })
 
       .otherwise({ redirectTo: '/login'})
+
+    IdleProvider.idle(10*60); // 10 minutes idle
+    IdleProvider.timeout(30); // after 30 seconds idle, time the user out
+    KeepaliveProvider.interval(5*60); // 5 minute keep-alive ping
+
   }
 
-  run.$inject = ['$rootScope', '$location', '$cookies', '$http', 'AuthenticationService'];
-  function run($rootScope, $location, $cookies, $http, AuthenticationService) {
+  run.$inject = ['$rootScope', '$location', '$cookies', '$http', '$uibModal', 'AuthenticationService', 'Idle'];
+  function run($rootScope, $location, $cookies, $http, $uibModal, AuthenticationService, Idle) {
     //AuthenticationService.clearCredentials();
+
     // keep user logged in after page refresh
     $rootScope.globals = $cookies.getObject('globals') || {};
     if($rootScope.globals.currentUser) {
@@ -49,6 +55,36 @@
       } else if (($location.path() == '/login' || $location.path() == '/register') && loggedIn) {
         $location.path('/');
       }
+    });
+
+    // Idle functions
+
+    function closeModals() {
+        if ($rootScope.warningModal) {
+          $rootScope.warningModal.close();
+          $rootScope.warningModal = null;
+        }
+      }
+
+    $rootScope.$on('IdleTimeout', function() {
+      closeModals();
+      Idle.unwatch();
+      AuthenticationService.clearCredentials();
+      $rootScope.$apply(function () {
+        $location.path('/login');
+      })
+    });
+
+    $rootScope.$on('IdleStart', function() {
+      closeModals();
+      $rootScope.warningModal = $uibModal.open({
+        templateUrl: 'warning-dialog.html',
+        windowClass: 'app-modal-window'
+      });
+    });
+
+    $rootScope.$on('IdleEnd', function() {
+      closeModals();
     });
   }
 

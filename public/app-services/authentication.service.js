@@ -19,25 +19,20 @@
       /* Dummy authentication for testing, uses $timeout to simulate api call
       ----------------------------------------------*/
       $timeout(function () {
-        var response;
-        UserService.getByUsername(username).then(function (user) {
-          if(user !== null && user.password == password) {
-            response = { success: true };
-          } else {
-            response = { success: false, message: 'Username or password is incorrect'};
-          }
+        UserService.authenticate(username, password).then(function (response) {
           callback(response);
         });
       }, 1000);
     }
 
-    function setCredentials(username, password) {
+    function setCredentials(username, password, token) {
       var authdata = Base64.encode(username + ':' + password);
 
       $rootScope.globals = {
         currentUser: {
           username: username,
-          authdata: authdata
+          authdata: authdata,
+          token: token
         }
       };
 
