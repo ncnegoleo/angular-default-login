@@ -85,6 +85,13 @@ module.exports = function (grunt) {
         files: [
           {src: 'public/index-prod.html', dest: 'dist/public/index.html'},
           {src: 'public/app.js', dest: 'dist/public/app.js'},
+          // Node spects
+          {src: 'routes/**/*.js', dest: 'dist/'},
+          {src: 'index.js', dest: 'dist/'},
+          {src: 'package.json', dest: 'dist/'},
+          // Heroku Achives
+          {src: 'app.json', dest: 'dist/'},
+          {src: 'Procfile', dest: 'dist/'}
         ]
       }
     }
