@@ -1,8 +1,0 @@
-{
-  "name": "Default Login",
-  "description": "A Example of loggin sistem with node and angular JS",
-  "repository": "https://github.com/ncnegoleo/angular-default-login",
-  "logo": "http://node-js-sample.herokuapp.com/node.svg",
-  "keywords": ["node", "express", "heroku", "angular", "login"],
-  "image": "heroku/nodejs"
-}
