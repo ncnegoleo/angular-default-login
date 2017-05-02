@@ -30,32 +30,32 @@
           } else {
             flash.keepAfterLocationChange = false;
           }
-        };
-      };
-    };
+        }
+      }
+    }
 
     function success(message, keepAfterLocationChange) {
       $rootScope.flash = {
         message: message,
         type: 'success',
         keepAfterLocationChange: keepAfterLocationChange
-      }
-    };
+      };
+    }
 
     function error(message, keepAfterLocationChange) {
       $rootScope.flash = {
         message: message,
         type: 'error',
         keepAfterLocationChange: keepAfterLocationChange
-      }
-    };
+      };
+    }
 
     function warning(message, keepAfterLocationChange) {
       $rootScope.flash = {
         message: message,
         type: 'warning',
         keepAfterLocationChange: keepAfterLocationChange
-      }
-    };
+      };
+    }
   }
 })();

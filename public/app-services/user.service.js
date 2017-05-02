@@ -7,7 +7,7 @@
 
     UserService.$inject = ['$http'];
     function UserService($http) {
-      var service = {}
+      var service = {};
 
       service.getAll = getAll;
       service.getById = getById;

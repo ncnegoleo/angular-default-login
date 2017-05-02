@@ -19,7 +19,7 @@
           .then(function (user) {
             if(user) {
               vm.user = user;
-              vm.token = $rootScope.globals.currentUser.token
+              vm.token = $rootScope.globals.currentUser.token;
               Idle.watch();
             } else {
               logout();

@@ -6,7 +6,7 @@
     .config(config)
     .run(run);
 
-  config.$inject = ['$routeProvider', '$locationProvider', 'IdleProvider', 'KeepaliveProvider']
+  config.$inject = ['$routeProvider', '$locationProvider', 'IdleProvider', 'KeepaliveProvider'];
   function config($routeProvider, $locationProvider, IdleProvider, KeepaliveProvider) {
     $routeProvider
       .when('/', {
@@ -27,7 +27,7 @@
         controllerAs: 'vm'
       })
 
-      .otherwise({ redirectTo: '/login'})
+      .otherwise({ redirectTo: '/login'});
 
     IdleProvider.idle(10*60); // 10 minutes idle
     IdleProvider.timeout(30); // after 30 seconds idle, time the user out
@@ -42,7 +42,7 @@
     // keep user logged in after page refresh
     $rootScope.globals = $cookies.getObject('globals') || {};
     if($rootScope.globals.currentUser) {
-      $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+      $http.defaults.headers.common.Authorization = 'Basic ' + $rootScope.globals.currentUser.authdata;
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
@@ -72,7 +72,7 @@
       AuthenticationService.clearCredentials();
       $rootScope.$apply(function () {
         $location.path('/login');
-      })
+      });
     });
 
     $rootScope.$on('IdleStart', function() {
